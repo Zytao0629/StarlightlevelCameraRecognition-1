@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj": {}
+    "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj": {
+    "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj",
+        "projectUniqueName": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj",
         "projectName": "StarlightlevelCameraRecognition",
-        "projectPath": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj",
+        "projectPath": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj",
         "packagesPath": "C:\\Users\\Cary\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition\\obj\\",
+        "outputPath": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,10 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
+            },
             "OpenCvSharp4.Extensions": {
               "target": "Package",
               "version": "[4.11.0.20250507, )"

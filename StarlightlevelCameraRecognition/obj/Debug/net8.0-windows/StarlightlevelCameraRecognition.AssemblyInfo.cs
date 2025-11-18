@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StarlightlevelCameraRecognition")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a67b425fa1fa1e638e56501689476a91c9e8855c")]
 [assembly: System.Reflection.AssemblyProductAttribute("StarlightlevelCameraRecognition")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StarlightlevelCameraRecognition")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -43,6 +43,14 @@
             button4 = new Button();
             button5 = new Button();
             groupBox2 = new GroupBox();
+            textBoxEndAngle = new TextBox();
+            label10 = new Label();
+            textBoxStartAngle = new TextBox();
+            label9 = new Label();
+            numericUpDownExerciseDuration = new NumericUpDown();
+            label8 = new Label();
+            label7 = new Label();
+            numericUpDownCleanTime = new NumericUpDown();
             numericUpDownOverlapThreshold = new NumericUpDown();
             numericUpDownRegionMinSize = new NumericUpDown();
             numericUpDownDiffThreshold = new NumericUpDown();
@@ -58,11 +66,13 @@
             groupBox3 = new GroupBox();
             button6 = new Button();
             textBox2 = new TextBox();
-            button7 = new Button();
+            button8 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             statusStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownExerciseDuration).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownCleanTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownOverlapThreshold).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownRegionMinSize).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownDiffThreshold).BeginInit();
@@ -128,7 +138,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(658, 102);
+            button2.Location = new Point(658, 205);
             button2.Name = "button2";
             button2.Size = new Size(149, 85);
             button2.TabIndex = 3;
@@ -137,6 +147,7 @@
             // 
             // richTextBox1
             // 
+            richTextBox1.BackColor = Color.FromArgb(255, 255, 192);
             richTextBox1.Location = new Point(673, 459);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.Size = new Size(609, 373);
@@ -147,7 +158,7 @@
             // 
             groupBox1.Controls.Add(button3);
             groupBox1.Controls.Add(textBox1);
-            groupBox1.Location = new Point(824, 12);
+            groupBox1.Location = new Point(1287, 486);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(345, 187);
             groupBox1.TabIndex = 5;
@@ -172,7 +183,7 @@
             // 
             // button4
             // 
-            button4.Location = new Point(658, 193);
+            button4.Location = new Point(658, 300);
             button4.Name = "button4";
             button4.Size = new Size(149, 75);
             button4.TabIndex = 6;
@@ -181,7 +192,7 @@
             // 
             // button5
             // 
-            button5.Location = new Point(658, 274);
+            button5.Location = new Point(658, 381);
             button5.Name = "button5";
             button5.Size = new Size(149, 75);
             button5.TabIndex = 7;
@@ -190,6 +201,14 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(textBoxEndAngle);
+            groupBox2.Controls.Add(label10);
+            groupBox2.Controls.Add(textBoxStartAngle);
+            groupBox2.Controls.Add(label9);
+            groupBox2.Controls.Add(numericUpDownExerciseDuration);
+            groupBox2.Controls.Add(label8);
+            groupBox2.Controls.Add(label7);
+            groupBox2.Controls.Add(numericUpDownCleanTime);
             groupBox2.Controls.Add(numericUpDownOverlapThreshold);
             groupBox2.Controls.Add(numericUpDownRegionMinSize);
             groupBox2.Controls.Add(numericUpDownDiffThreshold);
@@ -200,18 +219,84 @@
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(label1);
-            groupBox2.Location = new Point(824, 205);
+            groupBox2.Location = new Point(813, 35);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(377, 248);
+            groupBox2.Size = new Size(413, 421);
             groupBox2.TabIndex = 8;
             groupBox2.TabStop = false;
             groupBox2.Text = "变值控制";
+            // 
+            // textBoxEndAngle
+            // 
+            textBoxEndAngle.Location = new Point(172, 329);
+            textBoxEndAngle.Name = "textBoxEndAngle";
+            textBoxEndAngle.Size = new Size(124, 30);
+            textBoxEndAngle.TabIndex = 22;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(148, 329);
+            label10.Name = "label10";
+            label10.Size = new Size(18, 24);
+            label10.TabIndex = 21;
+            label10.Text = "-";
+            // 
+            // textBoxStartAngle
+            // 
+            textBoxStartAngle.Location = new Point(18, 329);
+            textBoxStartAngle.Name = "textBoxStartAngle";
+            textBoxStartAngle.Size = new Size(124, 30);
+            textBoxStartAngle.TabIndex = 20;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(6, 298);
+            label9.Name = "label9";
+            label9.Size = new Size(136, 24);
+            label9.TabIndex = 19;
+            label9.Text = "舵机运动角度：";
+            // 
+            // numericUpDownExerciseDuration
+            // 
+            numericUpDownExerciseDuration.Location = new Point(142, 265);
+            numericUpDownExerciseDuration.Name = "numericUpDownExerciseDuration";
+            numericUpDownExerciseDuration.Size = new Size(180, 30);
+            numericUpDownExerciseDuration.TabIndex = 18;
+            numericUpDownExerciseDuration.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(6, 267);
+            label8.Name = "label8";
+            label8.Size = new Size(136, 24);
+            label8.TabIndex = 17;
+            label8.Text = "舵机运动时长：";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(6, 233);
+            label7.Name = "label7";
+            label7.Size = new Size(136, 24);
+            label7.TabIndex = 16;
+            label7.Text = "底图更换周期：";
+            // 
+            // numericUpDownCleanTime
+            // 
+            numericUpDownCleanTime.Location = new Point(142, 231);
+            numericUpDownCleanTime.Name = "numericUpDownCleanTime";
+            numericUpDownCleanTime.Size = new Size(180, 30);
+            numericUpDownCleanTime.TabIndex = 15;
+            numericUpDownCleanTime.Value = new decimal(new int[] { 5, 0, 0, 0 });
             // 
             // numericUpDownOverlapThreshold
             // 
             numericUpDownOverlapThreshold.DecimalPlaces = 1;
             numericUpDownOverlapThreshold.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            numericUpDownOverlapThreshold.Location = new Point(131, 195);
+            numericUpDownOverlapThreshold.Location = new Point(142, 195);
             numericUpDownOverlapThreshold.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDownOverlapThreshold.Name = "numericUpDownOverlapThreshold";
             numericUpDownOverlapThreshold.Size = new Size(180, 30);
@@ -222,7 +307,7 @@
             // numericUpDownRegionMinSize
             // 
             numericUpDownRegionMinSize.Increment = new decimal(new int[] { 10, 0, 0, 0 });
-            numericUpDownRegionMinSize.Location = new Point(131, 159);
+            numericUpDownRegionMinSize.Location = new Point(142, 159);
             numericUpDownRegionMinSize.Maximum = new decimal(new int[] { 300, 0, 0, 0 });
             numericUpDownRegionMinSize.Name = "numericUpDownRegionMinSize";
             numericUpDownRegionMinSize.Size = new Size(180, 30);
@@ -233,7 +318,7 @@
             // numericUpDownDiffThreshold
             // 
             numericUpDownDiffThreshold.Increment = new decimal(new int[] { 10, 0, 0, 0 });
-            numericUpDownDiffThreshold.Location = new Point(131, 123);
+            numericUpDownDiffThreshold.Location = new Point(142, 122);
             numericUpDownDiffThreshold.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
             numericUpDownDiffThreshold.Name = "numericUpDownDiffThreshold";
             numericUpDownDiffThreshold.Size = new Size(180, 30);
@@ -244,7 +329,7 @@
             // numericUpDownHighlightDuration
             // 
             numericUpDownHighlightDuration.Increment = new decimal(new int[] { 10, 0, 0, 0 });
-            numericUpDownHighlightDuration.Location = new Point(131, 81);
+            numericUpDownHighlightDuration.Location = new Point(142, 86);
             numericUpDownHighlightDuration.Maximum = new decimal(new int[] { 200, 0, 0, 0 });
             numericUpDownHighlightDuration.Name = "numericUpDownHighlightDuration";
             numericUpDownHighlightDuration.Size = new Size(180, 30);
@@ -255,18 +340,18 @@
             // numericUpDownBrushSize
             // 
             numericUpDownBrushSize.Increment = new decimal(new int[] { 10, 0, 0, 0 });
-            numericUpDownBrushSize.Location = new Point(131, 31);
+            numericUpDownBrushSize.Location = new Point(142, 47);
             numericUpDownBrushSize.Maximum = new decimal(new int[] { 200, 0, 0, 0 });
             numericUpDownBrushSize.Name = "numericUpDownBrushSize";
             numericUpDownBrushSize.Size = new Size(180, 30);
             numericUpDownBrushSize.TabIndex = 5;
-            numericUpDownBrushSize.Value = new decimal(new int[] { 50, 0, 0, 0 });
+            numericUpDownBrushSize.Value = new decimal(new int[] { 100, 0, 0, 0 });
             numericUpDownBrushSize.ValueChanged += numericUpDownBrushSize_ValueChanged;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(25, 201);
+            label5.Location = new Point(36, 201);
             label5.Name = "label5";
             label5.Size = new Size(100, 24);
             label5.TabIndex = 4;
@@ -275,7 +360,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(0, 161);
+            label4.Location = new Point(6, 161);
             label4.Name = "label4";
             label4.Size = new Size(136, 24);
             label4.TabIndex = 3;
@@ -284,7 +369,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(7, 121);
+            label3.Location = new Point(18, 124);
             label3.Name = "label3";
             label3.Size = new Size(118, 24);
             label3.TabIndex = 2;
@@ -293,7 +378,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(25, 76);
+            label2.Location = new Point(36, 86);
             label2.Name = "label2";
             label2.Size = new Size(100, 24);
             label2.TabIndex = 1;
@@ -302,7 +387,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(25, 37);
+            label1.Location = new Point(36, 53);
             label1.Name = "label1";
             label1.Size = new Size(100, 24);
             label1.TabIndex = 0;
@@ -311,7 +396,7 @@
             // comboBoxPorts
             // 
             comboBoxPorts.FormattingEnabled = true;
-            comboBoxPorts.Location = new Point(1185, 62);
+            comboBoxPorts.Location = new Point(1384, 64);
             comboBoxPorts.Name = "comboBoxPorts";
             comboBoxPorts.Size = new Size(192, 32);
             comboBoxPorts.TabIndex = 9;
@@ -319,7 +404,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(1185, 35);
+            label6.Location = new Point(1340, 35);
             label6.Name = "label6";
             label6.Size = new Size(163, 24);
             label6.TabIndex = 10;
@@ -352,21 +437,21 @@
             textBox2.Size = new Size(249, 30);
             textBox2.TabIndex = 1;
             // 
-            // button7
+            // button8
             // 
-            button7.Location = new Point(658, 355);
-            button7.Name = "button7";
-            button7.Size = new Size(149, 75);
-            button7.TabIndex = 12;
-            button7.Text = "更换画面";
-            button7.UseVisualStyleBackColor = true;
+            button8.Location = new Point(658, 103);
+            button8.Name = "button8";
+            button8.Size = new Size(149, 84);
+            button8.TabIndex = 13;
+            button8.Text = "保存涂抹层";
+            button8.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1632, 866);
-            Controls.Add(button7);
+            Controls.Add(button8);
             Controls.Add(groupBox3);
             Controls.Add(label6);
             Controls.Add(comboBoxPorts);
@@ -388,6 +473,8 @@
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownExerciseDuration).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownCleanTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownOverlapThreshold).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownRegionMinSize).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownDiffThreshold).EndInit();
@@ -431,6 +518,14 @@
         private GroupBox groupBox3;
         private Button button6;
         private TextBox textBox2;
-        private Button button7;
+        private Button button8;
+        private NumericUpDown numericUpDownCleanTime;
+        private Label label7;
+        private Label label8;
+        private NumericUpDown numericUpDownExerciseDuration;
+        private Label label9;
+        private TextBox textBoxEndAngle;
+        private Label label10;
+        private TextBox textBoxStartAngle;
     }
 }

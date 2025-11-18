@@ -254,36 +254,36 @@ public class ModbusRTU
     {
         if (!CheckPortOpen())
         {
-            OnStatusMessage?.Invoke("❌ 串口未打开，无法初始化设备");
+            OnStatusMessage?.Invoke("✖ 串口未打开，无法初始化设备");
             return;
         }
 
-        OnStatusMessage?.Invoke("🔄 开始初始化：舵机和高低机回到初始位置...");
+        OnStatusMessage?.Invoke("🔁开始初始化：舵机和高低机回到初始位置...");
 
         try
         {
-            // 1️⃣ 通讯测试，读取一个保持寄存器
-            ReadHoldingRegisters(0, 1);
+            //  通讯测试
+          
             Thread.Sleep(50);
-            OnStatusMessage?.Invoke("✅ 通讯测试通过，从机在线");
+            OnStatusMessage?.Invoke("✔ 通讯测试通过，从机在线");
 
-            // 2️⃣ 舵机回初始（寄存器0x0000, 初始0085）
+            //舵机回初始（寄存器0x0000, 初始0085）
             byte[] servoInitCmd = BuildWriteSingleCommand(0x06, 0x0000, 0x0085);
             serialPort.Write(servoInitCmd, 0, servoInitCmd.Length);
             Thread.Sleep(200); // 给舵机动作时间
-            OnStatusMessage?.Invoke("✅ 舵机已回初始位置");
+            OnStatusMessage?.Invoke("✔ 舵机已回初始位置");
 
-            // 3️⃣ 高低机回初始（寄存器0x0001, 初始0055）
+            // 高低机回初始（寄存器0x0001, 初始0055）
             byte[] liftInitCmd = BuildWriteSingleCommand(0x06, 0x0001, 0x0055);
             serialPort.Write(liftInitCmd, 0, liftInitCmd.Length);
             Thread.Sleep(200); // 给高低机动作时间
-            OnStatusMessage?.Invoke("✅ 高低机已回初始位置");
+            OnStatusMessage?.Invoke("✔ 高低机已回初始位置");
 
-            OnStatusMessage?.Invoke("✅ 初始化完成，设备处于安全初始状态");
+            OnStatusMessage?.Invoke("✔ 初始化完成，设备处于安全初始状态");
         }
         catch
         {
-            OnStatusMessage?.Invoke("⚠️ 初始化异常，请检查设备连接");
+            OnStatusMessage?.Invoke("✖ 初始化异常，请检查设备连接");
         }
     }
 

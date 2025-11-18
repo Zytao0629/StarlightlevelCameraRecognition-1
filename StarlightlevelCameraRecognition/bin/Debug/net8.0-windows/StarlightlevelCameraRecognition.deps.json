@@ -8,13 +8,21 @@
     ".NETCoreApp,Version=v8.0": {
       "StarlightlevelCameraRecognition/1.0.0": {
         "dependencies": {
+          "Newtonsoft.Json": "13.0.4",
           "OpenCvSharp4.Extensions": "4.11.0.20250507",
           "OpenCvSharp4.runtime.win": "4.11.0.20250507",
-          "System.IO.Ports": "9.0.10",
-          "NModbus4": "2.1.0.0"
+          "System.IO.Ports": "9.0.10"
         },
         "runtime": {
           "StarlightlevelCameraRecognition.dll": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.4": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.4.30916"
+          }
         }
       },
       "OpenCvSharp4/4.11.0.20250507": {
@@ -257,14 +265,6 @@
             "fileVersion": "9.0.1025.47515"
           }
         }
-      },
-      "NModbus4/2.1.0.0": {
-        "runtime": {
-          "NModbus4.dll": {
-            "assemblyVersion": "2.1.0.0",
-            "fileVersion": "2.1.0.0"
-          }
-        }
       }
     }
   },
@@ -273,6 +273,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Newtonsoft.Json/13.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A==",
+      "path": "newtonsoft.json/13.0.4",
+      "hashPath": "newtonsoft.json.13.0.4.nupkg.sha512"
     },
     "OpenCvSharp4/4.11.0.20250507": {
       "type": "package",
@@ -427,11 +434,6 @@
       "sha512": "sha512-jMvwu+NOk/+vlOzTp9vpxIeGq+yRA+3EbkmpLMs37AAy9cI8YlY/ntTHL00w26Tvu6cIkx0/TdjmeHm0l99Nqw==",
       "path": "system.io.ports/9.0.10",
       "hashPath": "system.io.ports.9.0.10.nupkg.sha512"
-    },
-    "NModbus4/2.1.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }
