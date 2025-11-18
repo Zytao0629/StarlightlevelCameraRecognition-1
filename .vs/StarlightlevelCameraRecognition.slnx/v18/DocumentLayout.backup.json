@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\modbusrtu .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\modbusrtu .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\starlightlevelcamerarecognition\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\formmain.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\formmain.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\modbusrtu .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\modbusrtu .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,28 +50,27 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FormMain.cs [\u8BBE\u8BA1]",
+              "DocumentIndex": 1,
+              "Title": "FormMain.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs",
               "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\FormMain.cs",
-              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs [\u8BBE\u8BA1]*",
-              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs [\u8BBE\u8BA1]*",
+              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs [Design]",
+              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-18T09:04:47.444Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "FormMain.Designer.cs",
               "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.Designer.cs",
               "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\FormMain.Designer.cs",
               "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.Designer.cs",
               "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.Designer.cs",
-              "ViewState": "AgIAAL8BAAAAAAAAAAAnwL8BAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAD8BAAAAAAAAAAAnwMABAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T09:03:53.03Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-18T09:03:53.03Z"
             },
             {
               "$type": "Document",
@@ -79,9 +78,9 @@
               "Title": "FormMain.cs",
               "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs",
               "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\FormMain.cs",
-              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs*",
-              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs*",
-              "ViewState": "AgIAAEEEAAAAAAAAAADwv04EAABsAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs",
+              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs",
+              "ViewState": "AgIAAB0BAAAAAAAAAAAmwCgBAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-30T01:37:08.335Z",
               "EditorCaption": ""
@@ -96,21 +95,19 @@
               "RelativeToolTip": "StarlightlevelCameraRecognition\\Program.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAApwAcAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T01:37:06.101Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T01:37:06.101Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "ModbusRTU .cs",
               "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\ModbusRTU .cs",
               "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\ModbusRTU .cs",
               "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\ModbusRTU .cs",
               "RelativeToolTip": "StarlightlevelCameraRecognition\\ModbusRTU .cs",
-              "ViewState": "AgIAAFYAAAAAAAAAAAAewGAAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAALYAAAAAAAAAAAAiwNoAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T01:30:53.995Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T01:30:53.995Z"
             }
           ]
         }
