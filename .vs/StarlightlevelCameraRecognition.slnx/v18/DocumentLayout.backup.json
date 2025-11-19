@@ -51,14 +51,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "FormMain.cs [\u8BBE\u8BA1]",
+              "Title": "FormMain.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs",
               "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\FormMain.cs",
-              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs [\u8BBE\u8BA1]",
-              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs [\u8BBE\u8BA1]",
+              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs [Design]",
+              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-18T09:04:47.444Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
@@ -70,8 +70,7 @@
               "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.Designer.cs",
               "ViewState": "AgIAABgBAAAAAAAAAAAnwMABAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T09:03:53.03Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-18T09:03:53.03Z"
             },
             {
               "$type": "Document",
@@ -81,7 +80,7 @@
               "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\FormMain.cs",
               "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs",
               "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQBAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAABkDAAAAAAAAAAAAACgDAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-30T01:37:08.335Z",
               "EditorCaption": ""

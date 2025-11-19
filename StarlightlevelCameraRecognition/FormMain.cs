@@ -651,7 +651,7 @@ namespace StarlightlevelCameraRecognition
                     modbuserialPortControl.serialPort.Write(command, 0, command.Length);
                     AppendLog($"{DateTime.Now:HH:mm:ss} → 发送原始命令：{BitConverter.ToString(command).Replace("-", " ")}\r");
 
-                    // 等待响应（可根据设备调整等待时间）
+                    // 等待响应
                     Thread.Sleep(100);
                     int bytesToRead = modbuserialPortControl.serialPort.BytesToRead;
                     if (bytesToRead > 0)
@@ -771,7 +771,6 @@ namespace StarlightlevelCameraRecognition
                     return;
                 }
 
-                // 
                 string hexInput = input.Replace(" ", "");
                 if (hexInput.Length % 2 != 0)
                 {
@@ -849,7 +848,7 @@ namespace StarlightlevelCameraRecognition
                 }
             }
 
-            // 返回低字节在前，高字节在后（Modbus RTU标准）
+            // 返回低字节在前，高字节在后
             return new byte[] { (byte)(crc & 0xFF), (byte)(crc >> 8) };
         }
 
