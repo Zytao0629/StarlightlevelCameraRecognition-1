@@ -421,7 +421,7 @@ namespace StarlightlevelCameraRecognition
             AppendLog($"[{DateTime.Now:HH:mm:ss}] 🔁 底图已更新");
 
 
-            // 可选：保存底图调试
+            // 保存底图调试
             try
             {
                 string dir = @"D:\BackgroundTestGet";
@@ -560,7 +560,7 @@ namespace StarlightlevelCameraRecognition
                 // 清空接收缓冲区
                 modbuserialPortControl.serialPort.DiscardInBuffer();
 
-                // 1. 处理格式化命令 C/R/I
+                // 处理格式化命令 C/R/I
                 if (input.Contains(','))
                 {
                     string[] parts = input.Split(',');
@@ -634,7 +634,7 @@ namespace StarlightlevelCameraRecognition
                 }
                 else
                 {
-                    // 2. 原始十六进制命令
+                    // 原始十六进制命令
                     string hex = input.Replace(" ", "");
                     if (hex.Length % 2 != 0)
                     {
@@ -732,7 +732,7 @@ namespace StarlightlevelCameraRecognition
 
                 AppendLog($"{DateTime.Now:HH:mm:ss} ✔ 已捕获初始背景图，开启异物检测");
             }
-            isDetectionEnabled = true;   // 确保检测开启
+            isDetectionEnabled = true;   
             if (!isDetecting)
             {
                 isDetecting = true;
@@ -747,7 +747,7 @@ namespace StarlightlevelCameraRecognition
 
                         using var currentFrame = BitmapConverter.ToBitmap(frame);
 
-                        if (isDetectionEnabled)   // 只有启用检测才执行
+                        if (isDetectionEnabled)   
                             DetectAndTrackForeignObject(currentFrame);
 
                         Thread.Sleep(30);
@@ -764,14 +764,14 @@ namespace StarlightlevelCameraRecognition
         {
             try
             {
-                string input = textBox2.Text.Trim(); // 注意改成 textbox2
+                string input = textBox2.Text.Trim(); 
                 if (string.IsNullOrWhiteSpace(input))
                 {
                     AppendLog($"{DateTime.Now:HH:mm:ss} ✖ 命令不能为空\r");
                     return;
                 }
 
-                // 去掉空格，保证是连续的16进制字符
+                // 
                 string hexInput = input.Replace(" ", "");
                 if (hexInput.Length % 2 != 0)
                 {
@@ -802,34 +802,6 @@ namespace StarlightlevelCameraRecognition
                 AppendLog($"{DateTime.Now:HH:mm:ss} ✅ 计算 CRC：{BitConverter.ToString(crc).Replace("-", " ")}\r");
                 AppendLog($"{DateTime.Now:HH:mm:ss} ✅ 完整命令（含CRC）：{BitConverter.ToString(fullCommand).Replace("-", " ")}\r");
             }
-
-            //// 发送
-            //if (modbuserialPortControl.serialPort.IsOpen)
-            //{
-            //    modbuserialPortControl.serialPort.Write(fullCommand, 0, fullCommand.Length);
-            //    Thread.Sleep(100); // 等待响应
-            //    int bytesToRead = modbuserialPortControl.serialPort.BytesToRead;
-            //    if (bytesToRead > 0)
-            //    {
-            //        byte[] response = new byte[bytesToRead];
-            //        modbuserialPortControl.serialPort.Read(response, 0, bytesToRead);
-            //        richTextBox1.AppendText($"{DateTime.Now:HH:mm:ss} ⬅️ 收到响应：{BitConverter.ToString(response).Replace("-", " ")}\r");
-            //    }
-            //    else
-            //    {
-            //        richTextBox1.AppendText($"{DateTime.Now:HH:mm:ss} ⚠️ 未收到响应\r");
-            //    }
-            //}
-            //    else
-            //    {
-            //        richTextBox1.AppendText($"{DateTime.Now:HH:mm:ss} ⚠️ 串口未打开，无法发送\r");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    richTextBox1.AppendText($"{DateTime.Now:HH:mm:ss} ⚠️ 命令执行失败：{ex.Message}\r");
-            //}
-
             catch (Exception ex)
             {
                 AppendLog($"{DateTime.Now:HH:mm:ss} ⚠️ 命令处理失败：{ex.Message}\r");
@@ -861,7 +833,7 @@ namespace StarlightlevelCameraRecognition
             }
         }
 
-        //计算 Modbus RTU CRC16 校验码（多项式 0xA001）
+        //计算 Modbus RTU CRC16 校验码
         private byte[] CalculateModbusCRC(byte[] data)
         {
             ushort crc = 0xFFFF;
@@ -1070,7 +1042,7 @@ namespace StarlightlevelCameraRecognition
             {
                 isServoRunning = false;
 
-                // 统一关闭水泵
+                // 统一复位
                 if (isPumpOn)
                 {
                     try
