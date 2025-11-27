@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Drawing; 
 using System.Drawing.Imaging;
 using System.IO.Ports;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,6 +24,7 @@ namespace StarlightlevelCameraRecognition
         Button btnOpenForeigndetection;
         Button btnCaluCRC;
         Button btnSavePaintApplyLayer;
+        Button btnReloadLatestPaintLayer;
 
 
         #region 全局变量
@@ -31,8 +34,10 @@ namespace StarlightlevelCameraRecognition
         private ModbusRTU modbuserialPortControl;
 
         private Bitmap backgroundImage;  // 存储背景图
+        private Bitmap backgroundImageForUI; // 用于 PictureBox 显示，UI线程使用
         private bool isBackgroundCaptured = false;  // 是否已捕获背景
-
+        private bool isUpdatingBackground = false;
+    
 
         private bool isDrawing = false;              // 是否正在绘制
         private List<LineSegment> lines = new();       // 所有已画的线
@@ -70,6 +75,13 @@ namespace StarlightlevelCameraRecognition
 
         private bool isPumpOn = false;
         bool isServoRunning = false;
+        private readonly object logLock = new object();  // 写日志锁
+        private volatile Bitmap latestFrameCache;
+        private readonly object frameLock = new object();
+
+        private readonly object paintLayerLock = new object();
+        private Bitmap paintApplyLayer = null;
+
 
         #endregion
 
@@ -90,6 +102,7 @@ namespace StarlightlevelCameraRecognition
             btnOpenForeigndetection = button5;
             btnCaluCRC = button6;
             btnSavePaintApplyLayer = button8;
+            btnReloadLatestPaintLayer = button7;
 
             btnOpenDevice.Click += BtnOpenDevice_Click;
             btnCloseDevice.Click += BtnCloseDevice_Click;
@@ -98,6 +111,7 @@ namespace StarlightlevelCameraRecognition
             btnOpenForeigndetection.Click += BtnOpenForeigndetection_Click;
             btnCaluCRC.Click += BtnCaluCRC_Click;
             btnSavePaintApplyLayer.Click += BtnSavePaintApplyLayer_Click;
+            btnReloadLatestPaintLayer.Click += BtnReloadLatestPaintLayer_Click;
 
             pictureBox1.MouseDown += PictureBox1_MouseDown;
             pictureBox1.MouseMove += PictureBox1_MouseMove;
@@ -131,6 +145,7 @@ namespace StarlightlevelCameraRecognition
             LoadSavedLayer();
         }
 
+      
 
 
 
@@ -142,14 +157,42 @@ namespace StarlightlevelCameraRecognition
 
         private void AppendLog(string message)
         {
+
+            string logText = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}";
+
             if (richTextBox1.InvokeRequired)
             {
-                richTextBox1.Invoke(new Action(() => AppendLog(message)));
+                richTextBox1.Invoke(new Action(() =>
+                {
+                    richTextBox1.AppendText(logText + "\r\n");
+                    richTextBox1.ScrollToCaret();
+                }));
             }
             else
             {
-                richTextBox1.AppendText(message + "\r");
+                richTextBox1.AppendText(logText + "\r\n");
                 richTextBox1.ScrollToCaret();
+            }
+
+
+            try
+            {
+                lock (logLock)
+                {
+                    string dir = @"D:\Log\Recognition";
+                    if (!Directory.Exists(dir))
+                        Directory.CreateDirectory(dir);
+
+                    // 日志文件名
+                    string filePath = Path.Combine(dir,
+                        $"{DateTime.Now:yyyy-MM-dd-HH}.log");
+
+                    File.AppendAllText(filePath, logText + Environment.NewLine, Encoding.UTF8);
+                }
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText($"[LogError] {ex.Message}\r\n");
             }
         }
 
@@ -161,47 +204,72 @@ namespace StarlightlevelCameraRecognition
 
 
         #region blob的寻找监测高亮
-        // 寻找blob
+        //寻找blob
         private List<Rectangle> FindAllDifferenceRegions(Bitmap background, Bitmap current)
         {
             if (background == null || current == null || background.Size != current.Size)
                 return new List<Rectangle>();
 
-            bool[,] differenceMask = new bool[current.Width, current.Height];
+            List<Rectangle> regions = new List<Rectangle>();
+            int width = background.Width;
+            int height = background.Height;
 
-            for (int y = 0; y < current.Height; y++)
+            bool[,] differenceMask = new bool[width, height];
+
+            // 使用 LockBits + Marshal.Copy（安全版本）提高性能
+            BitmapData bgData = null;
+            BitmapData currData = null;
+            byte[] bgBuffer;
+            byte[] currBuffer;
+
+            try
             {
-                for (int x = 0; x < current.Width; x++)
+                bgData = background.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+                currData = current.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+
+                int stride = bgData.Stride;
+                int bytes = stride * height;
+                bgBuffer = new byte[bytes];
+                currBuffer = new byte[bytes];
+
+                System.Runtime.InteropServices.Marshal.Copy(bgData.Scan0, bgBuffer, 0, bytes);
+                System.Runtime.InteropServices.Marshal.Copy(currData.Scan0, currBuffer, 0, bytes);
+
+                // 遍历每个像素计算亮度差异
+                for (int y = 0; y < height; y++)
                 {
-                    Color bgColor = background.GetPixel(x, y);
-                    Color currColor = current.GetPixel(x, y);
+                    for (int x = 0; x < width; x++)
+                    {
+                        int index = y * stride + x * 3;
+                        int bgBrightness = (bgBuffer[index] + bgBuffer[index + 1] + bgBuffer[index + 2]) / 3;
+                        int currBrightness = (currBuffer[index] + currBuffer[index + 1] + currBuffer[index + 2]) / 3;
 
-                    int bgBrightness = (bgColor.R + bgColor.G + bgColor.B) / 3;
-                    int currBrightness = (currColor.R + currColor.G + currColor.B) / 3;
-                    int diff = Math.Abs(bgBrightness - currBrightness);
-
-                    differenceMask[x, y] = diff > diffThreshold;
+                        differenceMask[x, y] = Math.Abs(currBrightness - bgBrightness) > diffThreshold;
+                    }
                 }
             }
-
-            List<Rectangle> regions = new List<Rectangle>();
-            bool[,] visited = new bool[current.Width, current.Height];
-
-            for (int y = 0; y < current.Height; y++)
+            finally
             {
-                for (int x = 0; x < current.Width; x++)
+                if (background != null) background.UnlockBits(bgData);
+                if (current != null) current.UnlockBits(currData);
+            }
+
+            // 使用 BFS 找连通差异区域
+            bool[,] visited = new bool[width, height];
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
                 {
                     if (differenceMask[x, y] && !visited[x, y])
                     {
                         int minX = x, minY = y, maxX = x, maxY = y;
-                        Queue<(int x, int y)> queue = new Queue<(int x, int y)>();
+                        Queue<(int, int)> queue = new Queue<(int, int)>();
                         queue.Enqueue((x, y));
                         visited[x, y] = true;
 
                         while (queue.Count > 0)
                         {
                             var (cx, cy) = queue.Dequeue();
-
                             minX = Math.Min(minX, cx);
                             minY = Math.Min(minY, cy);
                             maxX = Math.Max(maxX, cx);
@@ -211,8 +279,7 @@ namespace StarlightlevelCameraRecognition
                             {
                                 int nx = cx + dx;
                                 int ny = cy + dy;
-
-                                if (nx >= 0 && nx < current.Width && ny >= 0 && ny < current.Height &&
+                                if (nx >= 0 && nx < width && ny >= 0 && ny < height &&
                                     differenceMask[nx, ny] && !visited[nx, ny])
                                 {
                                     visited[nx, ny] = true;
@@ -221,12 +288,11 @@ namespace StarlightlevelCameraRecognition
                             }
                         }
 
-                        int regionWidth = maxX - minX;
-                        int regionHeight = maxY - minY;
+                        int regionWidth = maxX - minX + 1;
+                        int regionHeight = maxY - minY + 1;
+
                         if (regionWidth > regionMinSize && regionHeight > regionMinSize)
-                        {
                             regions.Add(new Rectangle(minX, minY, regionWidth, regionHeight));
-                        }
                     }
                 }
             }
@@ -238,29 +304,59 @@ namespace StarlightlevelCameraRecognition
         private void DetectAndTrackForeignObject(Bitmap currentFrame)
         {
             if (currentFrame == null) return;
+
+            Bitmap frameCopyForDetection = null;
+
+            // Clone 当前帧，确保线程独立
+            lock (frameLock)
+            {
+                frameCopyForDetection = (Bitmap)currentFrame.Clone();
+            }
+
+
+
+            //--------------------------------------------------------------
+            // 获取当前涂抹层（线程安全克隆）
+            //--------------------------------------------------------------
+            Bitmap layerCopy = null;
+            lock (paintLayerLock)
+            {
+                if (paintApplyLayer != null)
+                    layerCopy = (Bitmap)paintApplyLayer.Clone();
+            }
+
+
+
+
             if (!isBackgroundCaptured || backgroundImage == null)
             {
                 AppendLog($"[{DateTime.Now:HH:mm:ss}] ✖ 背景图未捕获");
-                currentFrame.Dispose();
+                frameCopyForDetection.Dispose();
                 return;
+            }
+
+            Bitmap bgCopy;
+            lock (foreignObjectsLock)
+            {
+                if (backgroundImage == null)
+                    return;
+
+                // 克隆独立副本，线程安全
+                bgCopy = (Bitmap)backgroundImage.Clone();
             }
 
             try
             {
-                List<Rectangle> newRegions = FindAllDifferenceRegions(backgroundImage, currentFrame);
+                List<Rectangle> newRegions = FindAllDifferenceRegions(bgCopy, frameCopyForDetection);
 
                 lock (foreignObjectsLock)
                 {
                     foreignObjects = newRegions.Select(r => (rect: r, detectTime: DateTime.Now)).ToList();
                 }
 
-
-
                 if (newRegions.Count > 0)
                 {
-
                     var obj = newRegions[0]; // 取第一个异物
-
                     float overlapRatio;
 
                     lock (brushPointsLock)
@@ -274,8 +370,6 @@ namespace StarlightlevelCameraRecognition
 
                     if (overlapRatio >= overlapThreshold)
                     {
-
-                        
                         if (!isPumpOn)
                         {
                             byte[] pumpOn = modbuserialPortControl.BuildWriteSingleCommand(0x05, 0x0000, 0xFF00);
@@ -283,17 +377,16 @@ namespace StarlightlevelCameraRecognition
                             isPumpOn = true;
                             AppendLog($"[{DateTime.Now:HH:mm:ss}] 💧 水泵已打开");
                         }
-                        // 防止重复触发
+
                         if (!isServoRunning)
                         {
                             isServoRunning = true;
-                           
-                            _ = RotateServoAsync();
+                            Bitmap servoFrame = (Bitmap)frameCopyForDetection.Clone();
+                            _ = RotateServoAsync(servoFrame);
                         }
                     }
                     else
                     {
-                     
                         // 异物消失，关闭水泵
                         if (isPumpOn)
                         {
@@ -301,18 +394,18 @@ namespace StarlightlevelCameraRecognition
                             modbuserialPortControl.serialPort.Write(pumpOff, 0, pumpOff.Length);
                             isPumpOn = false;
                             AppendLog($"[{DateTime.Now:HH:mm:ss}] 💧 水泵已关闭");
-                            UpdateBackgroundImage(currentFrame);
+                            UpdateBackgroundImage(frameCopyForDetection);
                         }
                     }
-                      
 
-                    // 当异物占比未达阈值时，每隔 numericUpDownCleanTime 秒更新底图
-                    if (overlapRatio < overlapThreshold)
+                    // 定时更新底图
+                    if (!isUpdatingBackground && !isServoRunning)
                     {
                         double intervalSeconds = (double)numericUpDownCleanTime.Value;
-                        if ((DateTime.Now - lastBackgroundUpdateTime).TotalSeconds >= intervalSeconds)
+                        if (overlapRatio < overlapThreshold &&
+                            (DateTime.Now - lastBackgroundUpdateTime).TotalSeconds >= intervalSeconds)
                         {
-                            UpdateBackgroundImage(currentFrame);
+                            UpdateBackgroundImage(frameCopyForDetection);
                         }
                     }
 
@@ -320,17 +413,15 @@ namespace StarlightlevelCameraRecognition
                     string resultFolder = @"D:\DetectionResultScreen";
                     Directory.CreateDirectory(resultFolder);
                     string resultPath = Path.Combine(resultFolder, $"异物画面_{DateTime.Now:yyyyMMdd_HHmmss}.png");
-                    currentFrame.Save(resultPath, ImageFormat.Png);
-
-
+                    frameCopyForDetection.Save(resultPath, ImageFormat.Png);
                 }
                 else
                 {
+                    // 无异物时，定时更新底图
                     double intervalSeconds = (double)numericUpDownCleanTime.Value;
                     if ((DateTime.Now - lastBackgroundUpdateTime).TotalSeconds >= intervalSeconds)
                     {
-
-                        UpdateBackgroundImage(currentFrame);
+                        UpdateBackgroundImage(frameCopyForDetection);
                     }
                 }
             }
@@ -340,6 +431,8 @@ namespace StarlightlevelCameraRecognition
             }
             finally
             {
+                frameCopyForDetection.Dispose();
+                bgCopy.Dispose();
                 currentFrame.Dispose();
             }
         }
@@ -347,12 +440,16 @@ namespace StarlightlevelCameraRecognition
         // 绘制异物高亮标记
         private void DrawForeignObjectHighlight(Graphics g)
         {
-            // 筛选出未超时的blob
-            var activeObjects = foreignObjects
-                .Where(obj => (DateTime.Now - obj.detectTime).TotalSeconds < highlightDuration)
-                .ToList();
+            List<(Rectangle rect, DateTime detectTime)> activeObjects;
 
-            // 绘制每个blob
+            // 线程安全拷贝
+            lock (foreignObjectsLock)
+            {
+                activeObjects = foreignObjects
+                    .Where(obj => (DateTime.Now - obj.detectTime).TotalSeconds < highlightDuration)
+                    .ToList();
+            }
+
             foreach (var obj in activeObjects)
             {
                 // 红色边框
@@ -370,13 +467,17 @@ namespace StarlightlevelCameraRecognition
                 // 剩余高亮时间
                 double remainingSeconds = highlightDuration - (DateTime.Now - obj.detectTime).TotalSeconds;
                 g.DrawString($"检测到异物,高亮时间剩余: {Math.Ceiling(remainingSeconds)}s",
-                            SystemFonts.DefaultFont, Brushes.Red,
-                            obj.rect.X, obj.rect.Y - 20);
-
+                             SystemFonts.DefaultFont, Brushes.Red,
+                             obj.rect.X, obj.rect.Y - 20);
             }
-            // 更新异物列表
-            foreignObjects = activeObjects;
+
+            // 更新异物列表（移除超时）
+            lock (foreignObjectsLock)
+            {
+                foreignObjects = activeObjects;
+            }
         }
+
         //计算占比
         private float CalculateOverlap(Rectangle foreignObject)
         {
@@ -402,40 +503,69 @@ namespace StarlightlevelCameraRecognition
             return (float)overlapArea / totalArea;
         }
 
-
-
-
-        // 实时更新底图
+        //实时更新底图
         private void UpdateBackgroundImage(Bitmap currentFrame)
         {
-            if (currentFrame == null) return;
+            if (currentFrame == null || isUpdatingBackground) return;
+            isUpdatingBackground = true;
+
+            Bitmap newBg = (Bitmap)currentFrame.Clone();
 
             lock (foreignObjectsLock)
             {
-                backgroundImage?.Dispose();
-                backgroundImage = (Bitmap)currentFrame.Clone();
-                lastBackgroundUpdateTime = DateTime.Now;
-                isBackgroundCaptured = true;
+                var oldBg = backgroundImage;
+                backgroundImage = newBg; // 检测线程使用
+                oldBg?.Dispose();
             }
 
-            AppendLog($"[{DateTime.Now:HH:mm:ss}] 🔁 底图已更新");
+            // UI 使用单独副本
+            if (pictureBox2.InvokeRequired)
+            {
+                pictureBox2.Invoke(new Action(() =>
+                {
+                    backgroundImageForUI?.Dispose();
+                    backgroundImageForUI = (Bitmap)newBg.Clone();
+                    pictureBox2.Image = backgroundImageForUI;
+                }));
+            }
+            else
+            {
+                backgroundImageForUI?.Dispose();
+                backgroundImageForUI = (Bitmap)newBg.Clone();
+                pictureBox2.Image = backgroundImageForUI;
+            }
+
+            lastBackgroundUpdateTime = DateTime.Now;
+            isBackgroundCaptured = true;
+            isUpdatingBackground = false;
 
 
-            // 保存底图调试
+            // --- 保存底图到 D:\BackgroundDebugGet ---
             try
             {
-                string dir = @"D:\BackgroundTestGet";
+                if (backgroundImage == null) return;  // 避免 null
+
+                string dir = @"D:\BackgroundDebugGet";
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
 
-                string path = $@"{dir}\底图{DateTime.Now:yyyyMMddHHmmss}.png";
-                backgroundImage.Save(path, ImageFormat.Png);
+                string path = Path.Combine(dir, $"底图_{DateTime.Now:yyyyMMdd_HHmmss}.png");
+
+                // 使用新的 Bitmap 实例保存，防止占用冲突
+                using (Bitmap saveBmp = (Bitmap)backgroundImage.Clone())
+                {
+                    saveBmp.Save(path, ImageFormat.Png);
+                }
+
+                AppendLog($"[{DateTime.Now:HH:mm:ss}] 🔁 底图已保存");
             }
             catch (Exception ex)
             {
                 AppendLog($"保存背景图出错：{ex.Message}");
             }
+
         }
+
 
         #endregion
 
@@ -443,9 +573,24 @@ namespace StarlightlevelCameraRecognition
         #region 按钮事件
         private void BtnOpenDevice_Click(object? sender, EventArgs e)
         {
-
-
             if (isRunning) return;
+
+            isRunning = false;
+            Thread.Sleep(120); // 等待线程退出
+
+            if (capture != null)
+            {
+                try
+                {
+                    capture.Release();
+                    capture.Dispose();
+                }
+                catch { }
+                finally
+                {
+                    capture = null;
+                }
+            }
 
             capture = new VideoCapture(1);
             if (!capture.IsOpened())
@@ -461,38 +606,49 @@ namespace StarlightlevelCameraRecognition
             toolStripStatusLabel1.Text = "FPS" + $": {fps:F1}";
             toolStripStatusLabel2.Text = "Width" + $": {frameWidth}";
             toolStripStatusLabel3.Text = "Height" + $": {frameHeight}";
-            toolStripStatusLabel1.ForeColor = Color.Green;
-            toolStripStatusLabel2.ForeColor = Color.Green;
-            toolStripStatusLabel3.ForeColor = Color.Green;
+            toolStripStatusLabel1.ForeColor = Color.DarkOrange;
+            toolStripStatusLabel2.ForeColor = Color.DarkOrange;
+            toolStripStatusLabel3.ForeColor = Color.DarkOrange;
 
             isRunning = true;
 
             Task.Run(() =>
             {
-                while (isRunning && capture.IsOpened())
+                while (isRunning && capture != null && capture.IsOpened())
                 {
                     using var frame = new Mat();
-                    capture.Read(frame);
-                    if (frame.Empty()) continue;
+                    if (!capture.Read(frame) || frame.Empty())
+                        continue;
 
-                    var bmp = BitmapConverter.ToBitmap(frame);
-                    Bitmap bmpClone = (Bitmap)bmp.Clone();
-                    bmp.Dispose();
+                    // 从摄像头获取 Bitmap
+                    using var bmp = BitmapConverter.ToBitmap(frame);
 
+                    // --- UI 用独立副本 ---
+                    Bitmap pbImage = (Bitmap)bmp.Clone();
                     pictureBox1.Invoke(() =>
                     {
                         var old = pictureBox1.Image;
-                        pictureBox1.Image = bmpClone;
+                        pictureBox1.Image = pbImage;
                         old?.Dispose();
                     });
+
+                    // --- 后台缓存用独立副本 ---
+                    Bitmap cacheCopy = (Bitmap)bmp.Clone();
+                    lock (frameLock)
+                    {
+                        var oldCache = latestFrameCache;
+                        latestFrameCache = cacheCopy;
+                        oldCache?.Dispose();
+                    }
 
                     Thread.Sleep(30);
                 }
             });
+
+
             LoadSavedLayer();
 
-
-            //通讯
+            // 通讯初始化
             string selectedPort = comboBoxPorts.SelectedItem.ToString();
             bool ok = modbuserialPortControl.OpenPort(selectedPort);
             if (ok)
@@ -508,38 +664,81 @@ namespace StarlightlevelCameraRecognition
                 modbuserialPortControl.Initial();
             }
 
-
             btnCloseDevice.Enabled = true;
             btnSnapImage.Enabled = true;
             btnSendCommand.Enabled = true;
             btnOpenForeigndetection.Enabled = true;
         }
+
         private void BtnCloseDevice_Click(object? sender, EventArgs e)
         {
             if (!isRunning) return;
 
             isRunning = false;
+
+            // 取消异物检测线程
             cts?.Cancel();
-            capture?.Release();
-            capture = null;
 
-            // 清空 PictureBox
-            pictureBox1.Image?.Dispose();
-            pictureBox1.Image = null;
+            // 释放摄像头
+            if (capture != null)
+            {
+                try
+                {
+                    capture.Release();
+                    capture.Dispose();
+                }
+                catch { }
+                finally
+                {
+                    capture = null;
+                }
+            }
 
-            // 清零 StatusStrip 后缀
+            // 清空 PictureBox 显示，确保线程安全
+            pictureBox1.Invoke(() =>
+            {
+                var oldImage = pictureBox1.Image;
+                pictureBox1.Image = null;
+                oldImage?.Dispose();
+            });
+
+            // 清空底图 PictureBox（如果存在）
+            if (pictureBox2 != null)
+            {
+                pictureBox2.Invoke(() =>
+                {
+                    var oldBgImage = pictureBox2.Image;
+                    pictureBox2.Image = null;
+                    oldBgImage?.Dispose();
+                });
+            }
+
+            // 清零 StatusStrip
             toolStripStatusLabel1.Text = "";
             toolStripStatusLabel2.Text = "";
             toolStripStatusLabel3.Text = "";
 
+            // 关闭通讯
             modbuserialPortControl.ClosePort();
             toolStripStatusLabel4.Text = "通讯已断开✖";
             toolStripStatusLabel4.ForeColor = Color.Red;
 
+            // 禁用按钮
             btnSnapImage.Enabled = false;
             btnSendCommand.Enabled = false;
+            btnOpenForeigndetection.Enabled = false;
 
+            // 清理缓存
+            lock (frameLock)
+            {
+                latestFrameCache?.Dispose();
+                latestFrameCache = null;
+            }
+
+            // 停止检测标志
+            isDetecting = false;
         }
+
         private void BtnSendCommand_Click(object? sender, EventArgs e)
         {
             try
@@ -671,95 +870,113 @@ namespace StarlightlevelCameraRecognition
                 AppendLog($"{DateTime.Now:HH:mm:ss} ✖ 执行异常：{ex.Message}\r");
             }
         }
+
         private void BtnSnapImage_Click(object? sender, EventArgs e)
         {
             if (capture == null || !capture.IsOpened() || !isRunning)
             {
-                this.richTextBox1.AppendText("摄像头未打开或没有图像可捕获！");
+                AppendLog("摄像头未打开或没有图像可捕获！");
                 return;
             }
 
-            using (var frame = new Mat())
+            Bitmap snapCopy = null;
+
+            // 安全获取最新帧
+            lock (frameLock)
             {
-                // 读取当前帧
-                capture.Read(frame);
-                if (frame.Empty())
-                {
-                    AppendLog("捕获失败，当前帧为空！");
-                    return;
-                }
+                if (latestFrameCache != null)
+                    snapCopy = (Bitmap)latestFrameCache.Clone();
+            }
 
-                // 转 Bitmap
-                var bmp = BitmapConverter.ToBitmap(frame);
+            if (snapCopy == null)
+            {
+                AppendLog("当前没有缓存帧，无法保存！");
+                return;
+            }
 
+            try
+            {
                 // 设置保存文件夹
                 string SnapFilePath = @"D:\SnapImage";
                 if (!Directory.Exists(SnapFilePath))
                     Directory.CreateDirectory(SnapFilePath);
 
-                // 保存
+                // 保存 snapCopy
                 string fileName = Path.Combine(SnapFilePath, $"Capture_{DateTime.Now:yyyyMMdd_HHmmss}.png");
-                bmp.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
-
-                AppendLog($"{DateTime.Now:HH:mm:ss}当前帧已保存为 {fileName}");
+                snapCopy.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
+                AppendLog($"{DateTime.Now:HH:mm:ss} 当前帧已保存为 {fileName}");
+            }
+            catch (Exception ex)
+            {
+                AppendLog($"保存快照失败: {ex.Message}");
             }
         }
+
         private void BtnOpenForeigndetection_Click(object? sender, EventArgs e)
         {
-            if (capture == null || !capture.IsOpened() || !isRunning)
+            if (latestFrameCache == null)
             {
-                AppendLog($"{DateTime.Now:HH:mm:ss} ✖ 摄像头未打开，无法捕获背景");
+                AppendLog($"{DateTime.Now:HH:mm:ss} ✖ 暂无画面缓存，无法捕获背景");
                 return;
             }
 
-            // 捕获初始背景
-            using (var frame = new Mat())
+            // 捕获初始背景（使用缓存副本）
+            Bitmap bgCopy = null;
+            lock (frameLock)
             {
-                capture.Read(frame);
-                if (frame.Empty())
-                {
-                    AppendLog($"{DateTime.Now:HH:mm:ss} ✖ 捕获背景失败，当前帧为空");
-                    return;
-                }
-
-                backgroundImage = BitmapConverter.ToBitmap(frame);
-                isBackgroundCaptured = true;
-
-                string folderPath = @"D:\BackgroundIntialImage";
-                Directory.CreateDirectory(folderPath);
-                string filePath = Path.Combine(folderPath, $"{DateTime.Now:yyyyMMdd_HHmmss} 初始背景图.png");
-                backgroundImage.Save(filePath);
-
-                AppendLog($"{DateTime.Now:HH:mm:ss} ✔ 已捕获初始背景图，开启异物检测");
+                bgCopy = (Bitmap)latestFrameCache.Clone();
             }
-            isDetectionEnabled = true;   
+
+            lock (foreignObjectsLock)
+            {
+                backgroundImage?.Dispose();
+                backgroundImage = bgCopy;
+                isBackgroundCaptured = true;
+                lastBackgroundUpdateTime = DateTime.Now;
+            }
+
+            string folderPath = @"D:\BackgroundIntialImage";
+            Directory.CreateDirectory(folderPath);
+            string filePath = Path.Combine(folderPath, $"{DateTime.Now:yyyyMMdd_HHmmss}_初始背景图.png");
+            backgroundImage.Save(filePath);
+
+            AppendLog($"{DateTime.Now:HH:mm:ss} ✔ 已捕获初始背景图，开启异物检测");
+
+            isDetectionEnabled = true;
+
             if (!isDetecting)
             {
                 isDetecting = true;
 
                 Task.Run(() =>
                 {
-                    while (isRunning && capture != null && capture.IsOpened() && isDetecting)
+                    while (isRunning && isDetecting)
                     {
-                        using var frame = new Mat();
-                        capture.Read(frame);
-                        if (frame.Empty()) continue;
+                        Bitmap currentFrame = null;
 
-                        using var currentFrame = BitmapConverter.ToBitmap(frame);
+                        // 安全获取最新帧
+                        lock (frameLock)
+                        {
+                            if (latestFrameCache != null)
+                                currentFrame = (Bitmap)latestFrameCache.Clone();
+                        }
 
-                        if (isDetectionEnabled)   
-                            DetectAndTrackForeignObject(currentFrame);
+                        if (currentFrame != null)
+                        {
+                            if (isDetectionEnabled)
+                                DetectAndTrackForeignObject(currentFrame);
+
+                            currentFrame.Dispose();
+                        }
 
                         Thread.Sleep(30);
                     }
                 });
-
-               
             }
-
 
             btnOpenForeigndetection.Enabled = !isDetecting;
         }
+
         private void BtnCaluCRC_Click(object? sender, EventArgs e)
         {
             try
@@ -806,31 +1023,86 @@ namespace StarlightlevelCameraRecognition
                 AppendLog($"{DateTime.Now:HH:mm:ss} ⚠️ 命令处理失败：{ex.Message}\r");
             }
         }
+
         private void BtnSavePaintApplyLayer_Click(object? sender, EventArgs e)
         {
             // 创建一个新的 Bitmap，用来保存涂抹层
             int width = pictureBox1.Width;
             int height = pictureBox1.Height;
+
             using (Bitmap paintLayer = new Bitmap(width, height))
             {
                 using (Graphics g = Graphics.FromImage(paintLayer))
                 {
-                    // 清空背景并绘制涂抹层
                     g.Clear(Color.Transparent);
-                    foreach (var line in lines)
+
+                    // 锁住 brushPointsLock，确保访问 lines 列表安全
+                    lock (brushPointsLock)
                     {
-                        g.DrawLine(new Pen(Color.Red, line.Thickness),
-                                   line.Start.X, line.Start.Y,
-                                   line.End.X, line.End.Y);
+                        foreach (var line in lines)
+                        {
+                            g.DrawLine(new Pen(Color.Red, line.Thickness),
+                                       line.Start.X, line.Start.Y,
+                                       line.End.X, line.End.Y);
+                        }
                     }
                 }
 
-                // 保存文件
-                string savePath = Path.Combine(savedLayerFile, $"Layer_{DateTime.Now:yyyyMMdd_HHmmss}.png");
-                paintLayer.Save(savePath, ImageFormat.Png);
-                AppendLog($"涂抹层已保存：{savePath}");
+                try
+                {
+                    if (!Directory.Exists(savedLayerFile))
+                        Directory.CreateDirectory(savedLayerFile);
+
+                    string savePath = Path.Combine(savedLayerFile, $"Layer_{DateTime.Now:yyyyMMdd_HHmmss}.png");
+
+                    // 使用独立副本保存
+                    using (Bitmap saveCopy = (Bitmap)paintLayer.Clone())
+                    {
+                        saveCopy.Save(savePath, ImageFormat.Png);
+                    }
+
+                    AppendLog($"涂抹层已保存：{savePath}");
+                }
+                catch (Exception ex)
+                {
+                    AppendLog($"保存涂抹层失败: {ex.Message}");
+                }
             }
         }
+
+        private void BtnReloadLatestPaintLayer_Click(object? sender, EventArgs e)
+        {
+            try
+            {
+                string[] files = Directory.GetFiles(savedLayerFile, "*.png");
+                if (files.Length == 0)
+                {
+                    AppendLog($"[{DateTime.Now:HH:mm:ss}] ✖ 无可用涂抹层文件");
+                    return;
+                }
+
+                string latestFile = files.OrderByDescending(f => File.GetCreationTime(f)).First();
+                Bitmap loadedLayer = new Bitmap(latestFile);
+
+                lock (paintLayerLock)
+                {
+                    // 清空旧的涂层
+                    drawingLayer?.Dispose();
+                    drawingLayer = new Bitmap(loadedLayer); // 用最新涂层替换
+                    lines.Clear(); // 可选：清空原有线条列表
+                }
+
+                loadedLayer.Dispose();
+
+                pictureBox1.Invalidate(); // 刷新显示
+                AppendLog($"[{DateTime.Now:HH:mm:ss}] ✔ 已加载最新涂抹层: {latestFile}");
+            }
+            catch (Exception ex)
+            {
+                AppendLog($"[{DateTime.Now:HH:mm:ss}] ✖ 加载涂抹层失败: {ex.Message}");
+            }
+        }
+
 
         //计算 Modbus RTU CRC16 校验码
         private byte[] CalculateModbusCRC(byte[] data)
@@ -865,8 +1137,13 @@ namespace StarlightlevelCameraRecognition
                 if (latestFile != null)
                 {
                     Bitmap loadedLayer = new Bitmap(latestFile);
-                    drawingLayer?.Dispose();
-                    drawingLayer = new Bitmap(loadedLayer);
+
+                    lock (brushPointsLock)
+                    {
+                        drawingLayer?.Dispose();
+                        drawingLayer = (Bitmap)loadedLayer.Clone();
+                    }
+
                     loadedLayer.Dispose();
 
                     // 不显示
@@ -880,8 +1157,9 @@ namespace StarlightlevelCameraRecognition
                 AppendLog($"{DateTime.Now:HH:mm:ss} ✖ 加载涂抹层失败: {ex.Message}");
             }
         }
+
         #endregion
-      
+
 
 
         #region 涂层
@@ -993,8 +1271,11 @@ namespace StarlightlevelCameraRecognition
 
 
         #region 异物标转换为舵机数值
-        private async Task RotateServoAsync()
+        private async Task RotateServoAsync(Bitmap frameBeforeServo)
         {
+            Bitmap localFrame = (Bitmap)frameBeforeServo.Clone();
+            frameBeforeServo.Dispose();
+
             if (modbuserialPortControl.serialPort == null || !modbuserialPortControl.serialPort.IsOpen)
                 return;
 
@@ -1020,7 +1301,7 @@ namespace StarlightlevelCameraRecognition
                     // 左
                     byte[] cmdMin = modbuserialPortControl.BuildWriteSingleCommand(0x06, 0x0000, servoMin);
                     modbuserialPortControl.serialPort.Write(cmdMin, 0, cmdMin.Length);
-                    await Task.Delay(1000);  
+                    await Task.Delay(1000);
 
                     if ((DateTime.Now - startTime).TotalSeconds >= totalDuration) break;
 
@@ -1032,7 +1313,6 @@ namespace StarlightlevelCameraRecognition
 
                 AppendLog($"[{DateTime.Now:HH:mm:ss}] ✔ 舵机完成动作，范围：{minAngle}-{maxAngle}°，总时长上限：{totalDuration}s");
             }
-
             catch (Exception ex)
             {
                 AppendLog($"[{DateTime.Now:HH:mm:ss}] ✖ 舵机动作失败: {ex.Message}");
@@ -1054,8 +1334,6 @@ namespace StarlightlevelCameraRecognition
                         byte[] cmdHome = modbuserialPortControl.BuildWriteSingleCommand(0x06, 0x0000, 0x0087);
                         modbuserialPortControl.serialPort.Write(cmdHome, 0, cmdHome.Length);
                         AppendLog($"[{DateTime.Now:HH:mm:ss}] 🔁 舵机已回初始位置");
-
-                      
                     }
                     catch (Exception ex)
                     {
@@ -1063,11 +1341,34 @@ namespace StarlightlevelCameraRecognition
                     }
                 }
             }
+
+            try
+            {
+                await Task.Delay(300); // 等待舵机稳定
+                Bitmap frameCopy = null;
+
+                // 安全获取最新帧
+                lock (frameLock)
+                {
+                    if (latestFrameCache != null)
+                        frameCopy = (Bitmap)latestFrameCache.Clone();
+                }
+
+                if (frameCopy != null)
+                {
+                    UpdateBackgroundImage(frameCopy); // 已在 UpdateBackgroundImage 内锁住
+                    frameCopy.Dispose();
+                    AppendLog($"[{DateTime.Now:HH:mm:ss}] 📷 已使用舵机动作后的画面更新底图");
+                }
+            }
+            catch (Exception ex)
+            {
+                AppendLog($"[{DateTime.Now:HH:mm:ss}] ✖ 舵机结束后更新底图失败: {ex.Message}");
+            }
         }
-
-
         #endregion
     }
 
-
 }
+
+

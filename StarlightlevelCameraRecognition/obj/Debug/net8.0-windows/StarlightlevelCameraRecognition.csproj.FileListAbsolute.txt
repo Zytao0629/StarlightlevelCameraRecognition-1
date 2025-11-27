@@ -179,3 +179,4 @@ C:\Users\Cary\source\repos\StarlightlevelCameraRecognition -1\StarlightlevelCame
 C:\Users\Cary\source\repos\StarlightlevelCameraRecognition -1\StarlightlevelCameraRecognition-1\StarlightlevelCameraRecognition\obj\Debug\net8.0-windows\StarlightlevelCameraRecognition.genruntimeconfig.cache
 C:\Users\Cary\source\repos\StarlightlevelCameraRecognition -1\StarlightlevelCameraRecognition-1\StarlightlevelCameraRecognition\obj\Debug\net8.0-windows\ref\StarlightlevelCameraRecognition.dll
 C:\Users\Cary\source\repos\StarlightlevelCameraRecognition -1\StarlightlevelCameraRecognition-1\StarlightlevelCameraRecognition\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\Cary\source\repos\StarlightlevelCameraRecognition -1\StarlightlevelCameraRecognition-1\StarlightlevelCameraRecognition\obj\Debug\net8.0-windows\StarlightlevelCameraRecognition.Properties.Resources.resources

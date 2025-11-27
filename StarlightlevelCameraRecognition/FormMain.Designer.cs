@@ -67,6 +67,12 @@
             button6 = new Button();
             textBox2 = new TextBox();
             button8 = new Button();
+            pictureBox2 = new PictureBox();
+            groupBox4 = new GroupBox();
+            label11 = new Label();
+            label12 = new Label();
+            label13 = new Label();
+            button7 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             statusStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -79,12 +85,14 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownHighlightDuration).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownBrushSize).BeginInit();
             groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            groupBox4.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = SystemColors.ActiveCaption;
-            pictureBox1.Location = new Point(12, 35);
+            pictureBox1.Location = new Point(12, 51);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(640, 480);
             pictureBox1.TabIndex = 0;
@@ -94,7 +102,7 @@
             // 
             button1.Location = new Point(658, 12);
             button1.Name = "button1";
-            button1.Size = new Size(149, 84);
+            button1.Size = new Size(150, 80);
             button1.TabIndex = 1;
             button1.Text = "打开相机";
             button1.UseVisualStyleBackColor = true;
@@ -103,9 +111,9 @@
             // 
             statusStrip1.ImageScalingSize = new Size(24, 24);
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2, toolStripStatusLabel3, toolStripStatusLabel4 });
-            statusStrip1.Location = new Point(0, 835);
+            statusStrip1.Location = new Point(0, 1153);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1632, 31);
+            statusStrip1.Size = new Size(1644, 31);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -138,9 +146,9 @@
             // 
             // button2
             // 
-            button2.Location = new Point(658, 205);
+            button2.Location = new Point(658, 193);
             button2.Name = "button2";
-            button2.Size = new Size(149, 85);
+            button2.Size = new Size(150, 80);
             button2.TabIndex = 3;
             button2.Text = "关闭相机";
             button2.UseVisualStyleBackColor = true;
@@ -148,7 +156,7 @@
             // richTextBox1
             // 
             richTextBox1.BackColor = Color.FromArgb(255, 255, 192);
-            richTextBox1.Location = new Point(673, 459);
+            richTextBox1.Location = new Point(658, 622);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.Size = new Size(609, 373);
             richTextBox1.TabIndex = 4;
@@ -158,9 +166,9 @@
             // 
             groupBox1.Controls.Add(button3);
             groupBox1.Controls.Add(textBox1);
-            groupBox1.Location = new Point(1287, 486);
+            groupBox1.Location = new Point(1299, 479);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(345, 187);
+            groupBox1.Size = new Size(333, 194);
             groupBox1.TabIndex = 5;
             groupBox1.TabStop = false;
             groupBox1.Text = "手动发送命令";
@@ -183,24 +191,25 @@
             // 
             // button4
             // 
-            button4.Location = new Point(658, 300);
+            button4.Location = new Point(658, 284);
             button4.Name = "button4";
-            button4.Size = new Size(149, 75);
+            button4.Size = new Size(150, 80);
             button4.TabIndex = 6;
             button4.Text = "捕获图像";
             button4.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
-            button5.Location = new Point(658, 381);
+            button5.Location = new Point(658, 365);
             button5.Name = "button5";
-            button5.Size = new Size(149, 75);
+            button5.Size = new Size(150, 80);
             button5.TabIndex = 7;
             button5.Text = "开启监测";
             button5.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
+            groupBox2.BackColor = Color.FromArgb(192, 255, 255);
             groupBox2.Controls.Add(textBoxEndAngle);
             groupBox2.Controls.Add(label10);
             groupBox2.Controls.Add(textBoxStartAngle);
@@ -221,14 +230,14 @@
             groupBox2.Controls.Add(label1);
             groupBox2.Location = new Point(813, 35);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(413, 421);
+            groupBox2.Size = new Size(427, 544);
             groupBox2.TabIndex = 8;
             groupBox2.TabStop = false;
             groupBox2.Text = "变值控制";
             // 
             // textBoxEndAngle
             // 
-            textBoxEndAngle.Location = new Point(172, 329);
+            textBoxEndAngle.Location = new Point(214, 438);
             textBoxEndAngle.Name = "textBoxEndAngle";
             textBoxEndAngle.Size = new Size(124, 30);
             textBoxEndAngle.TabIndex = 22;
@@ -236,7 +245,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(148, 329);
+            label10.Location = new Point(175, 444);
             label10.Name = "label10";
             label10.Size = new Size(18, 24);
             label10.TabIndex = 21;
@@ -244,7 +253,7 @@
             // 
             // textBoxStartAngle
             // 
-            textBoxStartAngle.Location = new Point(18, 329);
+            textBoxStartAngle.Location = new Point(36, 438);
             textBoxStartAngle.Name = "textBoxStartAngle";
             textBoxStartAngle.Size = new Size(124, 30);
             textBoxStartAngle.TabIndex = 20;
@@ -252,7 +261,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(6, 298);
+            label9.Location = new Point(18, 393);
             label9.Name = "label9";
             label9.Size = new Size(136, 24);
             label9.TabIndex = 19;
@@ -396,7 +405,7 @@
             // comboBoxPorts
             // 
             comboBoxPorts.FormattingEnabled = true;
-            comboBoxPorts.Location = new Point(1384, 64);
+            comboBoxPorts.Location = new Point(72, 63);
             comboBoxPorts.Name = "comboBoxPorts";
             comboBoxPorts.Size = new Size(192, 32);
             comboBoxPorts.TabIndex = 9;
@@ -404,7 +413,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(1340, 35);
+            label6.Location = new Point(31, 26);
             label6.Name = "label6";
             label6.Size = new Size(163, 24);
             label6.TabIndex = 10;
@@ -414,16 +423,16 @@
             // 
             groupBox3.Controls.Add(button6);
             groupBox3.Controls.Add(textBox2);
-            groupBox3.Location = new Point(1232, 208);
+            groupBox3.Location = new Point(1287, 230);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(291, 222);
+            groupBox3.Size = new Size(345, 222);
             groupBox3.TabIndex = 11;
             groupBox3.TabStop = false;
             groupBox3.Text = "命令补齐";
             // 
             // button6
             // 
-            button6.Location = new Point(60, 125);
+            button6.Location = new Point(81, 103);
             button6.Name = "button6";
             button6.Size = new Size(156, 61);
             button6.TabIndex = 2;
@@ -432,7 +441,7 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(22, 66);
+            textBox2.Location = new Point(40, 38);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(249, 30);
             textBox2.TabIndex = 1;
@@ -441,20 +450,82 @@
             // 
             button8.Location = new Point(658, 103);
             button8.Name = "button8";
-            button8.Size = new Size(149, 84);
+            button8.Size = new Size(150, 80);
             button8.TabIndex = 13;
             button8.Text = "保存涂抹层";
             button8.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.BackColor = SystemColors.ActiveCaption;
+            pictureBox2.Location = new Point(12, 622);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(640, 480);
+            pictureBox2.TabIndex = 14;
+            pictureBox2.TabStop = false;
+            // 
+            // groupBox4
+            // 
+            groupBox4.BackColor = Color.FromArgb(0, 192, 192);
+            groupBox4.Controls.Add(comboBoxPorts);
+            groupBox4.Controls.Add(label6);
+            groupBox4.Location = new Point(1260, 25);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(346, 145);
+            groupBox4.TabIndex = 15;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "通讯端口";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(12, 24);
+            label11.Name = "label11";
+            label11.Size = new Size(100, 24);
+            label11.TabIndex = 17;
+            label11.Text = "实时画面：";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(12, 595);
+            label12.Name = "label12";
+            label12.Size = new Size(100, 24);
+            label12.TabIndex = 18;
+            label12.Text = "底图记录：";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(658, 594);
+            label13.Name = "label13";
+            label13.Size = new Size(100, 24);
+            label13.TabIndex = 19;
+            label13.Text = "日志记录：";
+            // 
+            // button7
+            // 
+            button7.Location = new Point(658, 451);
+            button7.Name = "button7";
+            button7.Size = new Size(150, 80);
+            button7.TabIndex = 20;
+            button7.Text = "加载最新涂抹层";
+            button7.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1632, 866);
+            BackColor = Color.Teal;
+            ClientSize = new Size(1644, 1184);
+            Controls.Add(button7);
+            Controls.Add(label13);
+            Controls.Add(label12);
+            Controls.Add(label11);
+            Controls.Add(groupBox4);
+            Controls.Add(pictureBox2);
             Controls.Add(button8);
             Controls.Add(groupBox3);
-            Controls.Add(label6);
-            Controls.Add(comboBoxPorts);
             Controls.Add(groupBox2);
             Controls.Add(button5);
             Controls.Add(button4);
@@ -465,7 +536,7 @@
             Controls.Add(button1);
             Controls.Add(pictureBox1);
             Name = "FormMain";
-            Text = "Form1";
+            Text = "异物监测";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
@@ -482,6 +553,9 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownBrushSize).EndInit();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -527,5 +601,11 @@
         private TextBox textBoxEndAngle;
         private Label label10;
         private TextBox textBoxStartAngle;
+        private PictureBox pictureBox2;
+        private GroupBox groupBox4;
+        private Label label11;
+        private Label label12;
+        private Label label13;
+        private Button button7;
     }
 }
