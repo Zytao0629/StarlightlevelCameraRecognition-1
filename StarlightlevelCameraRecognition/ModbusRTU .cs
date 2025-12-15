@@ -36,12 +36,12 @@ public class ModbusRTU
             serialPort.StopBits = stopBits;
 
             serialPort.Open();
-            OnStatusMessage?.Invoke($"✅ 串口 {portName} 已打开，准备通讯");
+            OnStatusMessage?.Invoke($"✔ 串口 {portName} 已打开，准备通讯");
             return true;
         }
         catch (Exception ex)
         {
-            OnStatusMessage?.Invoke($"❌ 打开串口失败: {ex.Message}");
+            OnStatusMessage?.Invoke($" ✖ 打开串口失败: {ex.Message}");
             return false;
         }
     }
@@ -51,7 +51,7 @@ public class ModbusRTU
         if (serialPort.IsOpen)
         {
             serialPort.Close();
-            OnStatusMessage?.Invoke("🔌 串口已关闭");
+            OnStatusMessage?.Invoke(" 串口已关闭");
         }
     }
 
@@ -59,7 +59,7 @@ public class ModbusRTU
     {
         if (serialPort == null || !serialPort.IsOpen)
         {
-            OnStatusMessage?.Invoke("⚠️ 串口未打开");
+            OnStatusMessage?.Invoke("✖ 串口未打开");
             return false;
         }
         return true;

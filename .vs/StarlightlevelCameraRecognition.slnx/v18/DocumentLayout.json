@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\serialportcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\serialportcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\formmain.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\formmain.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\starlightlevelcamerarecognition\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\modbusrtu .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\modbusrtu .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|c:\\users\\cary\\source\\repos\\starlightlevelcamerarecognition -1\\starlightlevelcamerarecognition-1\\starlightlevelcamerarecognition\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{856227E0-48A4-F6BE-F204-27F8381D1CF6}|StarlightlevelCameraRecognition\\StarlightlevelCameraRecognition.csproj|solutionrelative:starlightlevelcamerarecognition\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,20 +30,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 259,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{f4fc5ff1-28ef-4b04-ad02-6b298310ccc7}"
@@ -47,51 +39,82 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "FormMain.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs",
-              "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\FormMain.cs",
-              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs [Design]",
-              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs [Design]",
+              "Title": "SerialPortControl.cs",
+              "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\SerialPortControl.cs",
+              "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\SerialPortControl.cs",
+              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\SerialPortControl.cs",
+              "RelativeToolTip": "StarlightlevelCameraRecognition\\SerialPortControl.cs",
+              "ViewState": "AgIAAI8AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T09:04:47.444Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-12-14T03:50:06.782Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "FormMain.cs",
+              "Title": "FormMain.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs",
               "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\FormMain.cs",
-              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs",
-              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGgDAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T01:37:08.335Z",
+              "WhenOpened": "2025-12-08T07:58:29.956Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FormMain.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.Designer.cs",
+              "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\FormMain.Designer.cs",
+              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.Designer.cs",
+              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T03:50:21.136Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\Program.cs",
-              "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\Program.cs",
-              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\Program.cs",
-              "RelativeToolTip": "StarlightlevelCameraRecognition\\Program.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAApwAcAAAATAAAAAAAAAA==",
+              "Title": "FormMain.cs",
+              "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs",
+              "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\FormMain.cs",
+              "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\FormMain.cs",
+              "RelativeToolTip": "StarlightlevelCameraRecognition\\FormMain.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKEHAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-30T01:37:06.101Z"
+              "WhenOpened": "2025-10-30T01:37:08.335Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "ModbusRTU .cs",
               "DocumentMoniker": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\ModbusRTU .cs",
               "RelativeDocumentMoniker": "StarlightlevelCameraRecognition\\ModbusRTU .cs",
               "ToolTip": "C:\\Users\\Cary\\source\\repos\\StarlightlevelCameraRecognition -1\\StarlightlevelCameraRecognition-1\\StarlightlevelCameraRecognition\\ModbusRTU .cs",
               "RelativeToolTip": "StarlightlevelCameraRecognition\\ModbusRTU .cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAxwGMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-30T01:30:53.995Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 35,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
             }
           ]
         }
